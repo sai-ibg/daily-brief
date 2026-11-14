@@ -1,0 +1,9 @@
+scraper.py
+server.py
+requirements.txt
+supabase/
+.github/
+*.bat
+*.md
+data/
+.venv/

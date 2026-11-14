@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Daily Brief — UPSC current affairs</title>
+<style>
+:root{
+  --sand:#e8b86d; --sand-deep:#d9a24d; --lav:#dcdcef; --paper:#f4f4f8; --card:#fff;
+  --ink:#14141a; --muted:#6c6c7a; --line:#e6e6ee; --red:#f0442c; --dark:#17171c;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;margin:0;line-height:1.18;text-wrap:balance}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.meta{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{display:inline-block;font-size:11px;padding:2px 9px;border:1px solid currentColor;border-radius:99px;opacity:.85;white-space:nowrap}
+.tag.red{background:var(--red);border-color:var(--red);color:#fff;opacity:1}
+.story{cursor:pointer}
+.story:hover h3,.story:hover h4,.story:hover .t{text-decoration:underline;text-underline-offset:3px}
+.story.read h3,.story.read h4,.story.read .t{opacity:.55}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+/* image block with a fallback when a picture is missing or fails */
+.pic{position:relative;overflow:hidden;background:linear-gradient(135deg,#2b2b3a,#5a4a6e);border-radius:var(--r)}
+.pic::before{content:attr(data-s);position:absolute;inset:0;display:grid;place-items:center;color:#ffffff66;
+  font-family:var(--serif);font-size:20px;text-align:center;padding:8px}
+.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+
+/* ---------- header + hero ---------- */
+.top{background:var(--sand)}
+header{display:flex;align-items:center;gap:22px;padding:18px 0}
+.logo{font-family:var(--serif);font-size:30px;font-weight:700;letter-spacing:-.02em}
+.logo i{color:var(--red);font-style:normal}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{padding:6px 12px;border-radius:99px;font-size:13px}
+nav button:hover{background:#0000000f}
+nav button.on{background:var(--ink);color:#fff}
+.search{margin-left:auto;display:flex;align-items:center;background:#ffffff66;border-radius:99px;padding:0 14px}
+.search input{border:0;background:none;outline:0;font:inherit;padding:8px 6px;width:190px}
+.updated{font-size:12px;white-space:nowrap}
+#login{position:fixed;inset:0;z-index:50;background:var(--sand);display:grid;place-items:center;padding:16px}
+#login[hidden]{display:none}
+.loginbox{background:var(--card);border-radius:18px;padding:30px 28px;width:100%;max-width:360px;display:grid;gap:14px;box-shadow:0 10px 40px #0002}
+.loginbox p{margin:0;color:var(--muted)}
+.loginbox label{display:grid;gap:5px;font-size:13px;font-weight:600}
+.loginbox input{font:inherit;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.loginbox input:focus{outline:2px solid var(--red);outline-offset:0;border-color:transparent}
+.loginbox .pill{margin-top:4px;border:0}
+.lerr{color:var(--red)!important;font-size:13px;min-height:1em}
+.msgbar{background:var(--ink);color:#fff;text-align:center;padding:10px 16px;font-size:14px}
+.refresh{padding:7px 14px;border-radius:99px;background:var(--ink);color:#fff;font-size:13px;white-space:nowrap}
+.refresh:hover{background:var(--red)}
+.refresh[disabled]{opacity:.75;cursor:progress}
+.refresh.busy .ico{display:inline-block;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.refresh.busy .ico{animation:none}}
+.hero{display:grid;grid-template-columns:1.9fr 1fr;gap:28px;padding:6px 0 34px}
+.slider{position:relative;border-radius:18px;overflow:hidden;min-height:440px;background:#222}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none}
+.slide.on{opacity:1;pointer-events:auto}
+.slide .pic{position:absolute;inset:0;border-radius:0}
+.slide .shade{position:absolute;inset:0;background:linear-gradient(to top,#000000d9 0%,#00000066 45%,#0000 75%)}
+.slide .txt{position:absolute;left:32px;right:120px;bottom:30px;color:#fff}
+.slide h2{font-size:clamp(24px,3vw,38px);margin:10px 0 8px}
+.slide p{margin:0;opacity:.85;max-width:60ch;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.slide .meta{color:#ffffffcc}
+.arrows{position:absolute;right:26px;bottom:30px;display:flex;gap:10px;z-index:2}
+.arrows button{width:40px;height:40px;border-radius:50%;background:#ffffff33;color:#fff;font-size:18px}
+.arrows button:last-child{background:var(--red)}
+.side h3{font-size:22px;margin:12px 0}
+.side .pic{aspect-ratio:16/10}
+.side ul{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid #0000001f}
+.side li{padding:11px 0 11px 18px;border-bottom:1px solid #0000001f;position:relative;font-family:var(--serif);font-size:16px;line-height:1.3}
+.side li::before{content:"";position:absolute;left:2px;top:19px;width:6px;height:6px;border-radius:50%;background:var(--ink)}
+
+/* ---------- sections band ---------- */
+.band{background:var(--lav);padding:30px 0 34px}
+.cats{display:flex;flex-wrap:wrap;gap:6px 38px;margin-top:14px}
+.cats button{font-family:var(--serif);font-size:clamp(26px,3.4vw,42px);line-height:1.25;text-align:left}
+.cats button:hover{color:var(--red)}
+.cats sup{font-family:var(--sans);font-size:11px;background:var(--ink);color:#fff;border-radius:99px;padding:2px 7px;margin-left:6px;vertical-align:top;position:relative;top:10px}
+
+/* ---------- blocks ---------- */
+section.block{padding:38px 0}
+.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cards5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.ocard{position:relative;aspect-ratio:3/4.2;border-radius:var(--r);overflow:hidden;color:#fff}
+.ocard .pic{position:absolute;inset:0;border-radius:0}
+.ocard .shade{position:absolute;inset:0;background:linear-gradient(to top,#000000e0,#0000 62%)}
+.ocard .txt{position:absolute;left:16px;right:16px;bottom:16px}
+.ocard .t{font-family:var(--serif);font-size:18px;line-height:1.22;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.ocard small{opacity:.8;font-size:11px;display:block;margin-top:6px}
+.panel{background:var(--card);border-radius:18px;padding:26px}
+.today{display:grid;grid-template-columns:1.5fr 1.1fr .85fr;gap:28px}
+.lead .pic{aspect-ratio:16/10;margin-bottom:14px}
+.lead h3{font-size:26px;margin:8px 0}
+.lead p{color:var(--muted);margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.mini{display:grid;grid-template-columns:1fr 92px;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.mini:first-child{padding-top:0}.mini:last-child{border:0}
+.mini .pic{aspect-ratio:4/3;border-radius:10px}
+.mini .pic::before{font-size:11px}
+.mini h4{font-size:16px;margin-top:5px}
+.box{border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:16px}
+.srcrow{display:flex;justify-content:space-between;align-items:center;width:100%;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px;text-align:left}
+.srcrow:last-child{border:0}.srcrow:hover{color:var(--red)}
+.srcrow b{font-weight:600}.srcrow span{color:var(--muted);font-size:12px}
+.sandband{background:var(--sand);padding:36px 0}
+.hscroll{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(260px,1fr);gap:18px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x proximity}
+.hscroll>*{scroll-snap-align:start}
+.ecard{background:var(--card);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:10px}
+.ecard .pic{aspect-ratio:16/10;border-radius:10px}
+.ecard h4{font-size:18px}
+.ecard p{margin:0;color:var(--muted);font-size:13px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.darkwrap{background:var(--dark);color:#fff;border-radius:18px;padding:30px}
+.darkwrap .eyebrow,.darkwrap .meta{color:#ffffff99}
+.dark-lead{position:relative;border-radius:var(--r);overflow:hidden;min-height:340px;display:grid;place-items:center;text-align:center;margin:16px 0 22px}
+.dark-lead .pic{position:absolute;inset:0;border-radius:0}
+.dark-lead .shade{position:absolute;inset:0;background:#000000a6}
+.dark-lead .txt{position:relative;max-width:720px;padding:30px}
+.dark-lead h3{font-size:clamp(24px,3vw,36px);margin:12px 0}
+.dark-lead p{margin:0;opacity:.8}
+.dark-lead .meta{justify-content:center}
+.dark4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.dark4 .story{display:grid;grid-template-columns:1fr 64px;gap:10px;align-items:start}
+.dark4 .pic{aspect-ratio:1;border-radius:10px}.dark4 .pic::before{font-size:10px}
+.dark4 h4{font-size:15px;margin-top:4px}
+.latest{display:grid;grid-template-columns:1fr 300px;gap:28px}
+.row{display:grid;grid-template-columns:230px 1fr;gap:20px;padding:18px 0;border-bottom:1px solid var(--line)}
+.row:first-child{padding-top:0}
+.row .pic{aspect-ratio:16/11}
+.row h3{font-size:21px;margin:6px 0}
+.row p{margin:0;color:var(--muted);font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pill{display:inline-block;background:var(--ink);color:#fff;border-radius:99px;padding:10px 26px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-top:22px}
+.pill:hover{background:var(--red)}
+.center{text-align:center}
+.tabs{display:flex;gap:6px}
+.tabs button{font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--line)}
+.tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px}
+.filterhead{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.filterhead h2{font-size:36px}
+.filterhead button{color:var(--red);font-size:13px}
+.empty{padding:60px 0;text-align:center;color:var(--muted)}
+footer{background:var(--lav);padding:34px 0;margin-top:30px;font-size:13px;color:var(--muted)}
+footer .logo{color:var(--ink);font-size:24px}
+
+/* ---------- reader ---------- */
+#reader{position:fixed;inset:0;background:#fbfaf6;z-index:20;overflow-y:auto;display:none}
+#reader.on{display:block}
+.rbar{position:sticky;top:0;background:#fbfaf6f2;backdrop-filter:blur(6px);border-bottom:1px solid var(--line);z-index:2}
+.rbar .in{max-width:760px;margin:0 auto;padding:10px 20px;display:flex;gap:10px;align-items:center}
+.rbar button,.rbar a{font-size:13px;padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:#fff}
+.rbar button:hover,.rbar a:hover{border-color:var(--ink)}
+.rbar .sp{margin-left:auto}
+article{max-width:720px;margin:0 auto;padding:34px 20px 90px;--fs:19px}
+article h1{font-size:clamp(28px,4.4vw,42px);margin:14px 0 14px}
+article .pic{aspect-ratio:16/9;margin:22px 0}
+article .body p{font-family:var(--serif);font-size:var(--fs);line-height:1.7;margin:0 0 1.1em}
+article .note{background:#fff4d6;border-radius:10px;padding:12px 16px;font-size:14px;margin:18px 0}
+article .src{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+article .src a{color:var(--red)}
+
+/* ---------- paper view ---------- */
+#paper{position:fixed;inset:0;z-index:30;overflow-y:auto;background:#cfccc4;display:none}
+#paper.on{display:block}
+.pbar{position:sticky;top:0;background:#ffffffee;border-bottom:1px solid var(--line);z-index:2}
+.pbar .in{max-width:1180px;margin:0 auto;padding:10px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pbar button,.pbar select{font:inherit;font-size:13px;padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:#fff}
+.pbar button.go{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pbar label{font-size:13px;color:var(--muted)}
+.sheet{max-width:1180px;margin:22px auto 60px;background:#f8f5ec;color:#111;padding:38px 46px 50px;
+  box-shadow:0 4px 30px #0003;font-family:Georgia,"Times New Roman",Times,serif}
+.sheet h1,.sheet h2,.sheet h3{font-family:inherit}
+.mast{text-align:center}
+.mast h1{font-family:"Old English Text MT","Cloister Black",Georgia,serif;font-size:clamp(40px,7.5vw,84px);font-weight:400;line-height:1}
+.mastline{display:flex;justify-content:space-between;gap:12px;font-family:var(--sans);font-size:11px;text-transform:uppercase;
+  letter-spacing:.1em;border-top:3px double #111;border-bottom:1px solid #111;padding:6px 0;margin-top:12px}
+.psechead{font-family:var(--sans);font-weight:700;letter-spacing:.22em;text-transform:uppercase;font-size:13px;text-align:center;
+  border-top:3px solid #111;border-bottom:1px solid #111;padding:6px;margin:34px 0 16px}
+.psec:first-of-type .psechead{display:none}
+.psec:first-of-type{margin-top:20px}
+.plead h2{font-size:clamp(28px,4.2vw,48px);font-weight:700;line-height:1.06;text-wrap:balance}
+.pby{font-family:var(--sans);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#444;margin:6px 0 9px}
+.pcols{column-count:4;column-gap:24px;column-rule:1px solid #b9b5aa}
+.pcols p{font-size:13.5px;line-height:1.46;text-align:justify;hyphens:auto;margin:0;text-indent:1.1em;orphans:2;widows:2;overflow-wrap:anywhere}
+.sheet h2,.sheet h3,article h1,article .body p{overflow-wrap:anywhere}
+.pcols h3+.pby+p,.pcols>p:first-of-type,.pcols img+p{text-indent:0}
+.pcols img{width:100%;display:block;margin:0 0 9px;break-inside:avoid}
+.prest{margin-top:18px;border-top:1px solid #111;padding-top:12px}
+.pstory+.pstory{border-top:1px solid #111;padding-top:9px;margin-top:12px}
+.pstory h3{font-size:19px;font-weight:700;line-height:1.14;break-after:avoid;text-wrap:balance}
+.pstory .pby{break-after:avoid}
+.pnote{text-align:center;padding:60px 0;font-family:var(--sans);color:#555}
+.pfoot{font-family:var(--sans);font-size:11px;color:#555;text-align:center;border-top:1px solid #111;margin-top:30px;padding-top:10px}
+@media (max-width:1000px){.pcols{column-count:3}.sheet{padding:26px 24px}}
+@media (max-width:640px){.pcols{column-count:1}.sheet{padding:20px 16px;margin:0}}
+@page{size:A4;margin:11mm}
+@media print{
+  body.paper-open{overflow:visible!important;background:#fff}
+  body.paper-open #home,body.paper-open #reader,.pbar{display:none!important}
+  #paper.on{position:static;overflow:visible;background:#fff}
+  .sheet{box-shadow:none;margin:0;padding:0;max-width:none;background:#fff}
+  .pcols{column-count:3;column-gap:16px}
+  .pcols p{font-size:9.6pt}
+  .psec{break-before:page}.psec:first-of-type{break-before:auto}
+}
+
+@media (max-width:1000px){
+  .hero,.today,.latest{grid-template-columns:1fr}
+  .cards5{grid-template-columns:repeat(2,1fr)}
+  .dark4{grid-template-columns:repeat(2,1fr)}
+  .search input{width:120px}
+  header{flex-wrap:wrap}
+}
+@media (max-width:600px){
+  .wrap{padding:0 16px}
+  .row{grid-template-columns:110px 1fr;gap:12px}.row p{display:none}.row h3{font-size:17px}
+  .slider{min-height:380px}.slide .txt{left:18px;right:18px;bottom:84px}
+  .dark4{grid-template-columns:1fr}.updated{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="login" hidden>
+  <form id="loginForm" class="loginbox">
+    <div class="logo"><i>.</i>dailybrief</div>
+    <p>Sign in to read today's news.</p>
+    <label>Email<input id="lemail" type="email" autocomplete="username" required></label>
+    <label>Password<input id="lpass" type="password" autocomplete="current-password" required></label>
+    <button class="pill" id="lbtn" type="submit">Sign in</button>
+    <p class="lerr" id="lerr" role="alert"></p>
+  </form>
+</div>
+
+<div id="home">
+  <div id="msg" class="msgbar" role="status" hidden></div>
+  <div class="top"><div class="wrap">
+    <header>
+      <a class="logo" href="#" id="logo"><i>.</i>dailybrief</a>
+      <nav id="nav"></nav>
+      <label class="search"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="Search stories" aria-label="Search stories"></label>
+      <span class="updated" id="updated"></span>
+      <button class="refresh" id="refreshBtn" title="Collect the newest stories now"><span class="ico" aria-hidden="true">↻</span> <span id="refreshTxt">Refresh</span></button>
+    </header>
+    <div class="hero" id="hero"></div>
+  </div></div>
+
+  <div id="front">
+    <div class="band"><div class="wrap">
+      <div class="eyebrow">Syllabus sections</div>
+      <div class="cats" id="cats"></div>
+    </div></div>
+
+    <section class="block"><div class="wrap">
+      <div class="head"><span class="eyebrow">Top story in each section</span></div>
+      <div class="cards5" id="featured"></div>
+    </div></section>
+
+    <section class="block" style="padding-top:0"><div class="wrap"><div class="panel">
+      <div class="head"><span class="eyebrow">What's new today</span></div>
+      <div class="today" id="today"></div>
+    </div></div></section>
+
+    <div class="sandband"><div class="wrap">
+      <div class="head"><span class="eyebrow" style="color:var(--ink)">Editorials &amp; explainers</span>
+        <button class="eyebrow" data-filter="editorial" style="color:var(--ink)">View all →</button></div>
+      <div class="hscroll" id="editorials"></div>
+    </div></div>
+
+    <section class="block"><div class="wrap"><div class="darkwrap">
+      <span class="eyebrow">Covered by several portals</span>
+      <div id="buzz"></div>
+    </div></div></section>
+
+    <section class="block" style="padding-top:0"><div class="wrap"><div class="latest">
+      <div class="panel">
+        <div class="head"><span class="eyebrow">Latest</span>
+          <div class="tabs" id="regionTabs">
+            <button data-r="" class="on">All</button><button data-r="india">India</button><button data-r="world">World</button>
+          </div></div>
+        <div id="latest"></div>
+        <div class="center"><button class="pill" id="more">Show more</button></div>
+      </div>
+      <aside>
+        <div class="panel" style="padding:20px;margin-bottom:18px">
+          <div class="eyebrow" style="margin-bottom:8px">Portals</div><div id="sources2"></div>
+        </div>
+        <div class="panel" style="padding:20px">
+          <div class="eyebrow" style="margin-bottom:8px">Sections</div><div id="cats2"></div>
+        </div>
+      </aside>
+    </div></div></section>
+  </div>
+
+  <section class="block" id="results" hidden><div class="wrap">
+    <div class="filterhead"><h2 id="rtitle"></h2><span class="meta" id="rcount"></span><button id="clear">✕ Clear</button></div>
+    <div class="grid" id="rgrid"></div>
+    <div class="center"><button class="pill" id="rmore">Show more</button></div>
+  </div></section>
+
+  <footer><div class="wrap">
+    <div class="logo"><i>.</i>dailybrief</div>
+    <p id="foot"></p>
+    <button id="signout" class="pill" hidden style="margin-top:6px">Sign out</button>
+  </div></footer>
+</div>
+
+<div id="reader" role="dialog" aria-modal="true" aria-label="Article">
+  <div class="rbar"><div class="in">
+    <button id="rclose">← Back</button>
+    <button id="rprev">‹ Newer</button><button id="rnext">Older ›</button>
+    <span class="sp"></span>
+    <button id="fminus" aria-label="Smaller text">A−</button><button id="fplus" aria-label="Larger text">A+</button>
+  </div></div>
+  <article id="art"></article>
+</div>
+
+<div id="paper" role="dialog" aria-modal="true" aria-label="Paper view">
+  <div class="pbar"><div class="in">
+    <button id="pclose">← Back</button>
+    <label for="pregion">Edition</label>
+    <select id="pregion"><option value="">India + World</option><option value="india">India only</option><option value="world">World only</option></select>
+    <label for="pcount">Stories per section</label>
+    <select id="pcount"><option>3</option><option selected>5</option><option>8</option><option>12</option></select>
+    <span style="margin-left:auto"></span>
+    <button class="go" id="pprint">Print / save as PDF</button>
+  </div></div>
+  <div class="sheet" id="psheet"></div>
+</div>
+
+<script src="config.js"></script>
+<script>
+"use strict";
+const CFG = window.DAILY_BRIEF || {};
+const HOSTED = !!(CFG.supabaseUrl && CFG.supabaseKey);   // filled in = read from Supabase; empty = local files
+let sb = null;
+let D = null, items = [], byId = {}, srcName = {};
+const state = {cat:"", source:"", region:"", q:"", editorial:false, latestN:12, latestRegion:"", resN:24, slide:0};
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+let readSet = new Set(store.get("read", []));
+
+function ago(ts){
+  const m = Math.max(0, Math.round((Date.now()/1000 - ts)/60));
+  if (m < 1) return "just now";
+  if (m < 60) return m + " min ago";
+  if (m < 60*24) return Math.round(m/60) + " h ago";
+  return Math.round(m/1440) + " d ago";
+}
+const pic = (it, cls="") => `<div class="pic ${cls}" data-s="${esc(srcName[it.source])}">${
+  it.image ? `<img src="${esc(it.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}</div>`;
+const meta = (it, withCat=true) => `<div class="meta">${withCat ? `<span class="tag">${esc(D.categories[it.cat])}</span>` : ""}
+  <span>${esc(srcName[it.source])}</span><span>·</span><span>${ago(it.ts)}</span>${it.words ? `<span>· ${Math.max(1, Math.round(it.words/220))} min read</span>` : ""}</div>`;
+const attrs = it => `class="story${readSet.has(it.id) ? " read" : ""}" data-id="${it.id}" tabindex="0" role="link"`;
+
+/* ---------- picking stories ---------- */
+const day = () => items.filter(i => Date.now()/1000 - i.ts < 36*3600);
+function rank(list){           // most-covered first, then newest; pictures preferred
+  return [...list].sort((a,b) => (b.buzz - a.buzz) || ((b.image?1:0) - (a.image?1:0)) || (b.ts - a.ts));
+}
+function spread(list, n){      // avoid one portal filling a block
+  const out = [], seen = {};
+  for (const cap of [1,2,99]) for (const it of list){
+    if (out.length >= n) return out;
+    if (out.includes(it)) continue;
+    if ((seen[it.source] || 0) < cap){ out.push(it); seen[it.source] = (seen[it.source]||0)+1; }
+  }
+  return out;
+}
+
+/* ---------- front page ---------- */
+function renderFront(){
+  const used = new Set();
+  const take = (list, n) => { const r = spread(list.filter(i => !used.has(i.id)), n); r.forEach(i => used.add(i.id)); return r; };
+  const today = day();
+  const news = today.filter(i => !i.editorial);
+
+  // hero slider + side panel
+  const slides = take(rank(news.filter(i => i.image)), 5);
+  const side = take(news.filter(i => i.image).sort((a,b) => b.ts - a.ts), 1);
+  const bullets = take(news.sort((a,b) => b.ts - a.ts), 3);
+  state.slide = 0;
+  $("hero").innerHTML = `
+    <div class="slider" id="slider">
+      ${slides.map((it,n) => `<div ${attrs(it).replace('class="story', 'class="slide story' + (n===0 ? " on" : ""))}>
+        ${pic(it)}<div class="shade"></div>
+        <div class="txt">${meta(it)}<h2>${esc(it.title)}</h2><p>${esc(it.summary)}</p></div></div>`).join("")}
+      <div class="arrows"><button id="sprev" aria-label="Previous story">‹</button><button id="snext" aria-label="Next story">›</button></div>
+    </div>
+    <div class="side">
+      <div class="eyebrow" style="color:var(--ink)">Just in</div>
+      ${side.map(it => `<div ${attrs(it)} style="margin-top:12px">${pic(it)}<div style="margin-top:12px">${meta(it)}</div><h3>${esc(it.title)}</h3></div>`).join("")}
+      <ul>${bullets.map(it => `<li ${attrs(it)}><span class="t">${esc(it.title)}</span></li>`).join("")}</ul>
+    </div>`;
+
+  // one top story per section
+  const feat = [];
+  for (const c of Object.keys(D.categories)){
+    const r = take(rank(news.filter(i => i.cat === c && i.image)), 1);
+    if (r[0]) feat.push(r[0]);
+  }
+  $("featured").innerHTML = feat.slice(0,5).map(it => `<div ${attrs(it).replace('class="story','class="ocard story')}>
+    ${pic(it)}<div class="shade"></div><div class="txt"><span class="tag">${esc(D.categories[it.cat])}</span>
+    <div class="t" style="margin-top:8px">${esc(it.title)}</div><small>${esc(srcName[it.source])} · ${ago(it.ts)}</small></div></div>`).join("");
+
+  // what's new today
+  const lead = take(rank(news.filter(i => i.image && i.region === "india")), 1);
+  const minis = take(news.sort((a,b) => b.ts - a.ts), 5);
+  $("today").innerHTML = `
+    <div>${lead.map(it => `<div ${attrs(it).replace('class="story','class="lead story')}>${pic(it)}${meta(it)}<h3>${esc(it.title)}</h3><p>${esc(it.summary)}</p></div>`).join("")}</div>
+    <div>${minis.map(it => `<div ${attrs(it).replace('class="story','class="mini story')}><div>${meta(it)}<h4>${esc(it.title)}</h4></div>${pic(it)}</div>`).join("")}</div>
+    <div><div class="box"><div class="eyebrow" style="margin-bottom:6px">Portals · last 36 h</div><div id="sources1"></div></div></div>`;
+
+  // editorials
+  const eds = items.filter(i => i.editorial).slice(0, 12);
+  $("editorials").innerHTML = eds.map(it => `<div ${attrs(it).replace('class="story','class="ecard story')}>
+    ${pic(it)}${meta(it)}<h4>${esc(it.title)}</h4><p>${esc(it.summary)}</p></div>`).join("");
+  $("editorials").closest(".sandband").hidden = !eds.length;
+
+  // covered by several portals
+  const buzz = take(rank(today.filter(i => i.buzz > 0)), 5);
+  $("buzz").closest("section").hidden = buzz.length < 2;
+  if (buzz.length){
+    const b = buzz[0];
+    $("buzz").innerHTML = `<div ${attrs(b).replace('class="story','class="dark-lead story')}>${pic(b)}<div class="shade"></div>
+      <div class="txt">${meta(b)}<h3>${esc(b.title)}</h3><p>${esc(b.summary)}</p>
+      <div class="meta" style="margin-top:12px">Also covered by ${b.buzz} other portal${b.buzz>1?"s":""}</div></div></div>
+      <div class="dark4">${buzz.slice(1).map(it => `<div ${attrs(it)}><div>${meta(it,false)}<h4>${esc(it.title)}</h4></div>${pic(it)}</div>`).join("")}</div>`;
+  }
+
+  renderCounts(today);
+  renderLatest();
+}
+
+function renderCounts(today){
+  const cc = {}, sc = {};
+  today.forEach(i => { cc[i.cat] = (cc[i.cat]||0)+1; sc[i.source] = (sc[i.source]||0)+1; });
+  $("cats").innerHTML = Object.entries(D.categories).map(([k,v]) =>
+    `<button data-cat="${k}">${esc(v)}<sup>${cc[k]||0}</sup></button>`).join("");
+  const srcRows = D.sources.map(s => `<button class="srcrow" data-source="${s.id}"><b>${esc(s.name)}</b><span>${sc[s.id]||0} stories</span></button>`).join("");
+  $("sources1").innerHTML = srcRows; $("sources2").innerHTML = srcRows;
+  $("cats2").innerHTML = Object.entries(D.categories).map(([k,v]) =>
+    `<button class="srcrow" data-cat="${k}"><b>${esc(v)}</b><span>${cc[k]||0}</span></button>`).join("");
+}
+
+const rowHTML = it => `<div ${attrs(it).replace('class="story','class="row story')}>${pic(it)}
+  <div>${meta(it)}<h3>${esc(it.title)}</h3><p>${esc(it.summary)}</p></div></div>`;
+
+function renderLatest(){
+  const list = items.filter(i => !state.latestRegion || i.region === state.latestRegion);
+  $("latest").innerHTML = list.slice(0, state.latestN).map(rowHTML).join("");
+  $("more").hidden = list.length <= state.latestN;
+}
+
+/* ---------- filtered view ---------- */
+function filtered(){
+  const q = state.q.trim().toLowerCase();
+  return items.filter(i =>
+    (!state.cat || i.cat === state.cat) && (!state.source || i.source === state.source) &&
+    (!state.region || i.region === state.region) && (!state.editorial || i.editorial) &&
+    (!q || (i.title + " " + i.summary).toLowerCase().includes(q)));
+}
+function isFiltering(){ return !!(state.cat || state.source || state.region || state.q.trim() || state.editorial); }
+
+function render(){
+  const f = isFiltering();
+  $("front").hidden = f; $("hero").hidden = f; $("results").hidden = !f;
+  const active = state.editorial ? "editorial" : (state.cat || state.source || state.q.trim()) ? null : state.region;
+  document.querySelectorAll("#nav button").forEach(b => b.classList.toggle("on",
+    (b.dataset.filter === "editorial" ? "editorial" : b.dataset.region) === active));
+  if (!f){ renderFront(); return; }
+  const list = filtered();
+  const parts = [];
+  if (state.cat) parts.push(D.categories[state.cat]);
+  if (state.source) parts.push(srcName[state.source]);
+  if (state.editorial) parts.push("Editorials & explainers");
+  if (state.region) parts.push(state.region === "india" ? "India" : "World");
+  if (state.q.trim()) parts.push(`“${state.q.trim()}”`);
+  $("rtitle").textContent = parts.join(" · ");
+  $("rcount").textContent = list.length + (list.length === 1 ? " story" : " stories");
+  $("rgrid").innerHTML = list.length ? list.slice(0, state.resN).map(it => `<div ${attrs(it).replace('class="story','class="ecard story')}>
+    ${pic(it)}${meta(it)}<h4>${esc(it.title)}</h4><p>${esc(it.summary)}</p></div>`).join("")
+    : `<div class="empty" style="grid-column:1/-1">No stories match. Try a different word or clear the filter.</div>`;
+  $("rmore").hidden = list.length <= state.resN;
+}
+function setFilter(patch){
+  Object.assign(state, {cat:"", source:"", region:"", editorial:false, resN:24}, patch);
+  if (!("q" in patch)){ state.q = ""; $("q").value = ""; }
+  render(); window.scrollTo({top:0});
+}
+
+/* ---------- reader ---------- */
+let current = null, pending = null;
+const bodyCache = {}, waiters = {};
+window.__article = a => { bodyCache[a.id] = a.paras; (waiters[a.id] || []).forEach(f => f(a.paras)); delete waiters[a.id]; };
+function loadArticle(id){          // full text lives in one small file per story (or one Supabase row)
+  if (bodyCache[id]) return Promise.resolve(bodyCache[id]);
+  if (HOSTED) return sb.from("dailybrief_stories").select("paras").eq("id", id).maybeSingle()
+    .then(({data}) => (bodyCache[id] = (data && data.paras) || []), () => []);
+  return new Promise(res => {
+    (waiters[id] ||= []).push(res);
+    const s = document.createElement("script");
+    s.src = `data/articles/${id}.js`;
+    s.onerror = () => { s.remove(); res([]); };
+    s.onload = () => { s.remove(); setTimeout(() => res(bodyCache[id] || []), 0); };
+    document.head.appendChild(s);
+  });
+}
+
+function openReader(id, push=true){
+  const it = byId[id]; if (!it) return;
+  current = it; pending = it;
+  readSet.add(id); store.set("read", [...readSet].slice(-3000));
+  document.querySelectorAll(`[data-id="${id}"]`).forEach(e => e.classList.add("read"));
+  const when = new Date(it.ts*1000).toLocaleString([], {day:"numeric", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit"});
+  $("art").innerHTML = `${meta(it)}<h1>${esc(it.title)}</h1>
+    <div class="meta">${esc(when)}</div>
+    ${it.image ? pic(it) : ""}
+    <div class="body" id="abody"><p style="color:var(--muted)">Loading…</p></div>
+    <div class="src">Source: ${esc(srcName[it.source])} · <a href="${esc(it.url)}" target="_blank" rel="noopener noreferrer">Open the original page ↗</a></div>`;
+  $("art").style.setProperty("--fs", store.get("fs", 19) + "px");
+  $("reader").classList.add("on"); $("reader").scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  if (push) history.pushState({a:id}, "", "#a=" + id);
+  loadArticle(id).then(p => { if (pending && pending.id === id) showBody(p); });
+}
+function showBody(paras){
+  const it = pending; if (!it) return;
+  const note = (!it.full || !paras.length)
+    ? `<div class="note">Only part of this story could be collected — the portal limits it to subscribers or blocked the download. The summary is below; use the link at the bottom for the rest.</div>` : "";
+  const body = paras.length ? paras : [it.summary];
+  $("abody").innerHTML = note + body.map(p => `<p>${esc(p)}</p>`).join("");
+}
+function closeReader(pop=true){
+  if (!$("reader").classList.contains("on")) return;
+  $("reader").classList.remove("on"); document.body.style.overflow = ""; current = pending = null;
+  if (pop && location.hash.startsWith("#a=")) history.pushState({}, "", location.pathname + location.search);
+}
+function step(d){
+  const list = isFiltering() ? filtered() : items;
+  const n = list.findIndex(i => i.id === current?.id);
+  const next = list[n + d];
+  if (next){ openReader(next.id, false); history.replaceState({a:next.id}, "", "#a=" + next.id); }
+}
+
+/* ---------- paper view ---------- */
+let paperRun = 0;
+function openPaper(push=true){
+  $("paper").classList.add("on"); document.body.classList.add("paper-open"); document.body.style.overflow = "hidden";
+  $("paper").scrollTop = 0;
+  if (push) history.pushState({paper:1}, "", "#paper");
+  buildPaper();
+}
+function closePaper(pop=true){
+  if (!$("paper").classList.contains("on")) return;
+  $("paper").classList.remove("on"); document.body.classList.remove("paper-open"); document.body.style.overflow = "";
+  if (pop && location.hash === "#paper") history.pushState({}, "", location.pathname + location.search);
+}
+async function buildPaper(){
+  const run = ++paperRun, n = +$("pcount").value, region = $("pregion").value;
+  const now = Date.now()/1000;
+  const pool = items.filter(i => now - i.ts < 24*3600 && i.full && (!region || i.region === region));
+  const used = new Set();
+  const take = (list, k) => { const r = spread(list.filter(i => !used.has(i.id)), k); r.forEach(i => used.add(i.id)); return r; };
+  const news = pool.filter(i => !i.editorial);
+  const sections = [["Front page", take(rank(news.filter(i => i.image)), 1).concat(take(rank(news), 3))]];
+  for (const [k, v] of Object.entries(D.categories)) sections.push([v, take(rank(news.filter(i => i.cat === k)), n)]);
+  sections.push(["Editorials & explainers", take(pool.filter(i => i.editorial), Math.min(n, 5))]);
+  const live = sections.filter(s => s[1].length);
+  const all = live.flatMap(s => s[1]);
+  const today = new Date().toLocaleDateString("en-IN", {weekday:"long", day:"numeric", month:"long", year:"numeric"});
+  const mast = `<div class="mast"><h1>The Daily Brief</h1>
+    <div class="mastline"><span>${esc(today)}</span><span>UPSC current affairs edition</span><span>${all.length} stories · last 24 hours</span></div></div>`;
+  $("psheet").innerHTML = mast + `<div class="pnote">${all.length ? "Setting the pages…" : "No full stories collected in the last 24 hours for this edition."}</div>`;
+  if (!all.length) return;
+  const got = await Promise.all(all.map(i => loadArticle(i.id)));
+  if (run !== paperRun) return;                     // a newer build started meanwhile
+  const text = {}; all.forEach((it, x) => text[it.id] = got[x].length ? got[x] : [it.summary]);
+  const by = it => `<div class="pby">${esc(srcName[it.source])} · ${esc(new Date(it.ts*1000).toLocaleString("en-IN", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"}))}</div>`;
+  const paras = it => text[it.id].map(p => `<p>${esc(p)}</p>`).join("");
+  const img = it => it.image ? `<img src="${esc(it.image)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : "";
+  $("psheet").innerHTML = mast + live.map(([name, list]) => `<section class="psec">
+    <div class="psechead">${esc(name)}</div>
+    <div class="plead"><h2>${esc(list[0].title)}</h2>${by(list[0])}<div class="pcols">${img(list[0])}${paras(list[0])}</div></div>
+    ${list.length > 1 ? `<div class="pcols prest">${list.slice(1).map(it =>
+      `<div class="pstory"><h3>${esc(it.title)}</h3>${by(it)}${paras(it)}</div>`).join("")}</div>` : ""}
+  </section>`).join("") + `<div class="pfoot">Collected for personal study from ${esc([...new Set(all.map(i => srcName[i.source]))].join(", "))}.</div>`;
+}
+$("pclose").onclick = () => closePaper();
+$("pprint").onclick = () => window.print();
+$("pcount").onchange = buildPaper; $("pregion").onchange = buildPaper;
+
+/* ---------- events ---------- */
+document.addEventListener("click", e => {
+  if (e.target.closest("[data-paper]")){ openPaper(); return; }
+  if (e.target.closest("#sprev, #snext")){
+    const s = document.querySelectorAll("#slider .slide"); if (!s.length) return;
+    s[state.slide].classList.remove("on");
+    state.slide = (state.slide + (e.target.closest("#snext") ? 1 : s.length - 1)) % s.length;
+    s[state.slide].classList.add("on"); return;
+  }
+  const b = e.target.closest("[data-cat],[data-source],[data-filter],[data-region]");
+  if (b && !b.dataset.id){
+    if (b.dataset.cat !== undefined) setFilter({cat:b.dataset.cat});
+    else if (b.dataset.source !== undefined) setFilter({source:b.dataset.source});
+    else if (b.dataset.filter === "editorial") setFilter({editorial:true});
+    else setFilter({region:b.dataset.region});
+    return;
+  }
+  const st = e.target.closest(".story");
+  if (st) openReader(st.dataset.id);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape"){ closeReader(); closePaper(); }
+  else if (e.key === "Enter" && e.target.classList?.contains("story")) openReader(e.target.dataset.id);
+  else if (current && e.key === "ArrowRight") step(1);
+  else if (current && e.key === "ArrowLeft") step(-1);
+});
+window.addEventListener("popstate", () => {
+  const m = location.hash.match(/^#a=(\w+)/);
+  if (m && byId[m[1]]) openReader(m[1], false); else closeReader(false);
+  if (location.hash === "#paper") openPaper(false); else closePaper(false);
+});
+$("rclose").onclick = () => closeReader();
+$("rnext").onclick = () => step(1);
+$("rprev").onclick = () => step(-1);
+const font = d => { const v = Math.min(26, Math.max(15, store.get("fs", 19) + d)); store.set("fs", v); $("art").style.setProperty("--fs", v + "px"); };
+$("fplus").onclick = () => font(1); $("fminus").onclick = () => font(-1);
+$("logo").onclick = e => { e.preventDefault(); setFilter({}); };
+$("clear").onclick = () => setFilter({});
+$("more").onclick = () => { state.latestN += 12; renderLatest(); };
+$("rmore").onclick = () => { state.resN += 24; render(); };
+$("regionTabs").onclick = e => {
+  const b = e.target.closest("button"); if (!b) return;
+  state.latestRegion = b.dataset.r; state.latestN = 12;
+  [...$("regionTabs").children].forEach(x => x.classList.toggle("on", x === b)); renderLatest();
+};
+let qt; $("q").oninput = e => { clearTimeout(qt); qt = setTimeout(() => { state.q = e.target.value; state.resN = 24; render(); }, 180); };
+
+/* ---------- data loading ---------- */
+const STOPW = new Set(("the a an of in on for to and or with at by from as is are was were be been has have had will " +
+  "would after over into amid says say said new its his her their this that not but more than about what why how who " +
+  "when where india indian us").split(" "));
+function addBuzz(list){     // buzz = how many other portals carry a similar headline
+  const now = Date.now()/1000, recent = list.filter(i => now - i.ts < 36*3600);
+  const W = new Map(recent.map(i => [i, new Set((i.title.toLowerCase().match(/[a-z0-9]{3,}/g) || []).filter(w => !STOPW.has(w)))]));
+  list.forEach(i => i.buzz = 0);
+  for (const a of recent){
+    const wa = W.get(a); if (wa.size < 3) continue;
+    const others = new Set();
+    for (const b of recent){
+      if (b.source === a.source) continue;
+      const wb = W.get(b); if (wb.size < 3) continue;
+      let n = 0; for (const w of wa) if (wb.has(w)) n++;
+      if (n / Math.min(wa.size, wb.size) >= 0.5) others.add(b.source);
+    }
+    a.buzz = others.size;
+  }
+}
+function load(data){
+  if (data.items.length && data.items[0].buzz === undefined) addBuzz(data.items);
+  D = data; items = data.items; byId = {}; srcName = {};
+  items.forEach(i => byId[i.id] = i);
+  data.sources.forEach(s => srcName[s.id] = s.name);
+  $("nav").innerHTML = `<button data-region="">Front page</button><button data-region="india">India</button><button data-region="world">World</button><button data-filter="editorial">Editorials</button><button data-paper style="border:1px solid var(--ink)">▤ Print paper view</button>`;
+  $("updated").textContent = "Updated " + ago(data.generated);
+  $("foot").textContent = `${items.length} stories from ${data.sources.map(s => s.name).join(", ")}. Collected for personal study; every story links to its original page. Refreshed hourly.`;
+  render();
+}
+function refresh(){
+  const s = document.createElement("script");
+  s.src = "data/news.js?t=" + Date.now();
+  s.onload = () => { s.remove();
+    if (window.NEWS_DATA && (!D || window.NEWS_DATA.generated !== D.generated) && !current) load(window.NEWS_DATA);
+    else if (D) $("updated").textContent = "Updated " + ago(D.generated); };
+  s.onerror = () => { s.remove(); if (!D) document.body.insertAdjacentHTML("afterbegin",
+    `<div class="empty">No news collected yet. Run <code>scraper.py</code> once, then reload this page.</div>`); };
+  document.head.appendChild(s);
+}
+/* ---------- refresh button ---------- */
+const served = location.protocol.startsWith("http");
+let refreshing = false;
+function setRefresh(busy, text){
+  refreshing = busy;
+  $("refreshBtn").disabled = busy; $("refreshBtn").classList.toggle("busy", busy);
+  $("refreshTxt").textContent = text;
+}
+function flash(text){ setRefresh(false, text); setTimeout(() => { if (!refreshing) $("refreshTxt").textContent = "Refresh"; }, 4000); }
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+async function collectNowHosted(){
+  const before = D ? D.generated : 0, count = items.length;
+  setRefresh(true, "Starting…");
+  try {
+    const {data:{session}} = await sb.auth.getSession();
+    if (!session) return showLogin();
+    const r = await fetch("/api/refresh", {method:"POST", headers:{Authorization:"Bearer " + session.access_token}});
+    if (!r.ok) throw new Error(await r.text());
+    const t0 = Date.now();
+    for (;;){
+      await sleep(5000);
+      const run = await sbRun();
+      if (run && !run.running && run.generated > before) break;
+      if (Date.now() - t0 > 15*60*1000) throw new Error("timed out");
+      const secs = Math.round((Date.now() - t0)/1000);
+      $("refreshTxt").textContent = (run && run.running ? "Collecting… " : "Queued… ") + secs + "s";
+    }
+    const keep = {...state}; await hostedLoad(true); Object.assign(state, keep); render();
+    const added = items.length - count;
+    flash(added > 0 ? `${added} new stor${added === 1 ? "y" : "ies"}` : "No new stories");
+  } catch (e){
+    console.error(e); flash("Refresh failed");
+  }
+}
+async function collectNow(){
+  if (refreshing) return;
+  if (HOSTED) return collectNowHosted();
+  if (!served){            // opened as a plain file: can only re-read what the hourly task collected
+    setRefresh(true, "Loading…"); refresh(); setTimeout(() => flash("Latest loaded"), 800); return;
+  }
+  const before = D ? D.generated : 0, count = items.length;
+  setRefresh(true, "Collecting…");
+  try {
+    const r = await fetch("/api/refresh", {method:"POST", headers:{"X-Daily-Brief":"1"}});
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const t0 = Date.now();
+    for (;;){
+      await new Promise(res => setTimeout(res, 3000));
+      const s = await (await fetch("/api/status", {cache:"no-store"})).json();
+      if (!s.running && s.generated > before) break;
+      if (!s.running && Date.now() - t0 > 15000) break;      // finished without new data
+      if (Date.now() - t0 > 15*60*1000) throw new Error("timed out");
+      $("refreshTxt").textContent = "Collecting… " + Math.round((Date.now() - t0)/1000) + "s";
+    }
+    await new Promise(res => { const s = document.createElement("script"); s.src = "data/news.js?t=" + Date.now();
+      s.onload = s.onerror = () => { s.remove(); res(); }; document.head.appendChild(s); });
+    if (window.NEWS_DATA && window.NEWS_DATA.generated !== before){
+      const keep = {...state}; load(window.NEWS_DATA); Object.assign(state, keep); render();
+    }
+    const added = items.length - count;
+    flash(added > 0 ? `${added} new stor${added === 1 ? "y" : "ies"}` : "No new stories");
+  } catch (e){
+    flash("Refresh failed");
+  }
+}
+$("refreshBtn").onclick = collectNow;
+
+/* ---------- hosted mode: Supabase + login ---------- */
+const COLS = "id,title,url,summary,image,ts,source,region,cat,editorial,has_full,words";
+function showMsg(html){ $("msg").innerHTML = html; $("msg").hidden = !html; }
+async function sbRun(){
+  const {data, error} = await sb.from("dailybrief_runs").select("running,started,generated,meta").eq("id", 1).maybeSingle();
+  if (error) throw error;
+  return data;
+}
+async function sbAll(){
+  const rows = [];
+  for (let from = 0; ; from += 1000){
+    const {data, error} = await sb.from("dailybrief_stories").select(COLS).not("cat", "is", null)
+      .order("ts", {ascending:false}).range(from, from + 999);
+    if (error) throw error;
+    rows.push(...data);
+    if (data.length < 1000) break;
+  }
+  return rows.map(r => ({...r, full:r.has_full}));
+}
+async function hostedLoad(force=false){
+  const run = await sbRun();
+  if (!run){ showMsg("This account can't read the news yet — its user id has to be added to the reader list."); return; }
+  if (!run.meta || !run.meta.sources){ showMsg("No news collected yet. The first hourly run will fill this page."); return run; }
+  if (!force && D && D.generated === run.generated){ $("updated").textContent = "Updated " + ago(D.generated); return run; }
+  if (!force && current) return run;            // don't swap stories under the open article
+  const list = await sbAll();
+  showMsg("");
+  load({generated:run.generated, categories:run.meta.categories, sources:run.meta.sources, items:list});
+  return run;
+}
+function showLogin(){ $("login").hidden = false; document.body.style.overflow = "hidden"; $("lemail").focus(); }
+let hostedTimer = null;
+function startHosted(){
+  $("login").hidden = true; document.body.style.overflow = ""; $("signout").hidden = false;
+  showMsg("Loading the news…");
+  hostedLoad().catch(e => { console.error(e); showMsg("Couldn't load the news. Check your connection and reload."); });
+  clearInterval(hostedTimer);
+  hostedTimer = setInterval(() => hostedLoad().catch(() => {}), 5*60*1000);
+}
+$("loginForm").onsubmit = async e => {
+  e.preventDefault();
+  $("lerr").textContent = ""; $("lbtn").disabled = true; $("lbtn").textContent = "Signing in…";
+  const {error} = await sb.auth.signInWithPassword({email:$("lemail").value.trim(), password:$("lpass").value});
+  $("lbtn").disabled = false; $("lbtn").textContent = "Sign in";
+  if (error){ $("lerr").textContent = "Wrong email or password."; return; }
+  $("lpass").value = ""; startHosted();
+};
+$("signout").onclick = async () => { await sb.auth.signOut(); location.hash = ""; location.reload(); };
+
+function loadScript(src){
+  return new Promise((ok, bad) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); });
+}
+async function boot(){
+  if (!HOSTED){ refresh(); setInterval(refresh, 5*60*1000); return; }
+  try { await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"); }
+  catch (e){ showMsg("Couldn't reach the login service. Check your connection and reload."); return; }
+  sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey);
+  const {data:{session}} = await sb.auth.getSession();
+  if (session) startHosted(); else showLogin();
+}
+boot();
+window.addEventListener("load", () => { const m = location.hash.match(/^#a=(\w+)/); if (m) setTimeout(() => openReader(m[1], false), 300); });
+</script>
+</body>
+</html>
